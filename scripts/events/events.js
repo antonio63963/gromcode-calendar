@@ -122,8 +122,6 @@ function onDeleteEvent() {
     let clearedEvents = events.filter(event => !event.id == eventIdToDelete);
     setItem('events', clearedEvents);
     closePopup();
-
-
     renderEvents();
 }
 
