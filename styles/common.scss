@@ -1,3 +1,6 @@
+$blue-color: rgb(68, 123, 226);
+$shadowPrimary: 0px 2px 5px 0px rgba(153,153,153,1);
+$textColorGrey: rgb(73, 73, 73);
 .button {
     height: 40px;
     border-radius: 8px;
@@ -7,6 +10,7 @@
     font-size: 16px;
     font-weight: 500;
 }
+
 
 .icon-button {
     outline: none;
@@ -26,9 +30,43 @@
         padding: 16px;
         border: 1px solid #ccc;
         border-radius: 8px;
+        box-shadow: 0px 2px 5px 0px rgba(153, 153, 153, 1);
+        position: relative;
+
     }
 }
+.event-form {
+    margin-top: 20px;
 
+    &__time {
+        margin: 20px 0;
+    }
+}
+.event-form__field {
+    border: none;
+}
+
+.event-form__submit-btn {
+    border: none;
+    border-radius: 5px;
+    background-color: rgb(68, 123, 226);
+    color: #fff;
+    height: 30px;
+    width: 100px;
+
+}
+.create-event__close-btn {
+    background: none;
+    border: none;
+    transform: rotate(45deg);
+    position: absolute;
+    right: -5px;
+    top: 10px;
+    
+}
+.create-event__close-btn:hover {
+    transform: scale(1.5);
+}
 .overlay {
     position: fixed;
     top: 0;
@@ -47,6 +85,7 @@
         border: 1px solid #ccc;
         border-radius: 8px;
     }
+
 }
 
 .hidden {

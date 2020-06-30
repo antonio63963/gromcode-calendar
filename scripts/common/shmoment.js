@@ -27,7 +27,7 @@ const shmoment = date => {
         add(units, value) {
             const currentUnitValue = result[getMethodsNames[units]]();
             result = new Date(
-                result[setMethodsNames[units]](currentUnitValue + value),
+                result[setMethodsNames[units]](currentUnitValue + value)
             );
             return this;
         },

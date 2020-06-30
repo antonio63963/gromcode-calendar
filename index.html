@@ -57,9 +57,20 @@
     <div class="popup hidden overlay">
         <div class="popup__overlay"></div>
         <div class="popup__content">
-            <button class="delete-event-btn">Delete</button>
+
+            <input class="popup__input popup__title" type="text" name="popupTitle"></input>
+            <div class="popup__content-time">
+                <input class="popup__input popup__start-time" type="time" name="popupTime"></input>
+                <input class="popup__input popup__end-time" type="time" name="popupTime"></input>
+            </div>
+            <textarea class="popup__input popup__description" type="text" name="popupDescription"></textarea>
+            <div class="popup__buttons">
+                <button class="eventBtn save-event-btn"><i class="fas fa-save"></i></button>
+                <button class="eventBtn exit-event-btn"><i class="fas fa-sign-out-alt"></i></button>
+                <button class="eventBtn delete-event-btn"><i class="fas fa-trash-alt"></i></button>
+            </div>
         </div>
-        </div>
+    </div>
     </div>
     <script src="scripts/index.js" type="module"></script>
 </body>

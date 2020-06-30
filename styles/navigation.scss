@@ -1,1 +1,30 @@
 // стили навигации
+
+.header {
+    display: flex;
+    padding-top: 20px;
+    padding-bottom: 10px;
+    margin-left: 60px;
+    
+   
+    // border-bottom: 2px solid lightgrey;
+
+    
+}
+
+.create-event-btn {
+    padding: 0, 20px;
+    width: 100px;
+    border-radius: 20px;
+    margin-right: 30px;
+    border: none;
+    box-shadow: 0px 2px 5px 0px rgba(153,153,153,1);
+}
+
+.create-event-btn__icon {
+    margin-right: 10px;
+}
+.navigation__today-btn {
+    width: 85px;
+    border-width: 2px;
+}

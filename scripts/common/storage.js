@@ -10,10 +10,13 @@ let storage = {
 
 export const setItem = (key, value) => {
     // ф-ция должна устанавливать значения в объект storage
+    Array.isArray(storage[key]) && !Array.isArray(value) ? storage[key].push(value) :
+    storage[key] = value;
 };
 
 export const getItem = key => {
     // ф-ция должна возвращать по ключу значения из объекта storage
+    return storage[key];
 };
 
 // пример объекта события

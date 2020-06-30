@@ -1,1 +1,116 @@
 // стили отображаемого в календаре события
+@import 'common.scss';
+
+
+.event {
+  background-color: $blue-color;
+  min-width: 100px;
+  border-radius: 7px;
+  color: wheat;
+  font-weight: 300;
+  font-size: 14px;
+  padding: 8px;
+  position: absolute;
+  z-index: 1;
+  cursor: pointer;
+  overflow: hidden;
+  animation: revealEvent 0.5s ease-in-out 0s forwards;
+}
+
+@keyframes revealEvent {
+  from {
+    height: 80%;
+  }
+
+  to {
+    height: 100%;
+  }
+}
+
+.event__title {
+  position: relative;
+  opacity: 0;
+  animation: moveUp 1s ease-in-out 0s forwards;
+}
+
+.event__time {
+  position: relative;
+  opacity: 0;
+  animation: moveUp 1s ease-in-out 0.1s forwards;
+}
+@keyframes moveUp {
+  from {
+    top: 20%;
+    opacity: 0;
+  }
+
+  to {
+    top: 0%;
+    opacity: 1;
+  }
+}
+
+
+
+.popup__content {
+  
+  border: none;
+  box-shadow: $shadowPrimary;
+  max-width: 200px;
+  overflow: hidden;
+}
+.popup__input {
+  border: none;
+  margin-bottom: 15px;
+  color: $textColorGrey;
+  
+}
+.popup__description, .popup__title {
+  max-width: 180px;
+}
+.popup__buttons {
+  display: flex;
+  position: relative;
+  justify-content: space-between;
+}
+// buttons icons
+.fa-save {
+  position: absolute;
+  bottom: -40px;
+  animation: move 2s ease-in-out 0s forwards;
+}
+.fa-sign-out-alt {
+  position: absolute;
+  bottom: -40px;
+  animation: move 2s ease-in-out 0.1s forwards;
+}
+.fa-trash-alt {
+  position: absolute;
+  bottom: -40px;
+  animation: move 2s ease-in-out 0.2s forwards;
+}
+
+@keyframes move {
+  0% {
+    bottom: -40px;
+  }
+  70% {
+    bottom: 5px
+  }
+  // 80% {
+  //   bottom: -4px
+  // }
+ 
+  100% {
+    bottom: 0px;
+  }
+}
+
+.eventBtn {
+  border: none;
+  background: none;
+  color: $blue-color;
+  position: relative;
+  font-size: 18px;
+ 
+}

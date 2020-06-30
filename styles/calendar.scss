@@ -1,1 +1,90 @@
 // стили сетки календаря и заголовка календаря с днями недели
+@import 'common.scss';
+.calendar {
+    color: rgb(73, 73, 73);
+  height: 100%;
+    &__time-scale {
+        
+    }
+    &__week {
+        display: flex;
+        justify-content: space-around;
+        flex: 1 1 auto;
+    }
+}
+
+.calendar__header {
+    display: flex;
+    justify-content: space-around;
+    flex: 1 1 auto;
+    padding: 20px 0 0px 0;
+    margin-left: 60px;
+    
+    // box-shadow: 0px 2px 3px -1px rgba(153, 153, 153, 1);
+}
+
+.calendar__body {
+    overflow: hidden auto;
+    height: 100%;
+    
+  
+   
+}
+.calendar__week-container {
+    display: flex;
+    height: 100%;
+    
+    
+}
+
+.calendar__day {
+    display: flex;
+    flex-direction: column;
+    flex: 1 1 auto;
+    // height: 100%;
+}
+.calendar__time-slot {
+    display: flex;
+    min-width: 100px;
+    min-height: 60px;
+    flex: 1 1 auto;
+    border: 2px solid lightgrey;
+    border-width: 0 1px 1px 0px;
+    position: relative;
+    
+}
+
+
+.day-lable {
+    min-width: 100px;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+
+    &__day-number {
+        font-size: 32px;
+        margin-top: 30px;
+       
+    }
+
+}
+
+// time-slot
+
+.time-slot {
+    margin-left: 20px;;
+    height: 60px;
+    width: 45px;
+    font-size: 14px;
+    text-align: right;
+    flex: 1 1 auto;
+    &__time {
+        position: relative;
+        top: 50px;
+        right: 10px;
+    }
+  
+
+}
