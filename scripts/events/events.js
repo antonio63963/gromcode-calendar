@@ -11,16 +11,30 @@ import {
 const weekElem = document.querySelector('.calendar__week');
 const deleteEventBtn = document.querySelector('.fa-trash-alt');
 
+const popupTitle = document.querySelector('.popup__title');
+const popupStartTime = document.querySelector('.popup__start-time');
+const popupEndTime = document.querySelector('.popup__end-time');
+const popupDescripion = document.querySelector('.popup__description');
+
 function handleEventClick(event) {
     // если произошел клик по событию, то нужно паказать попап с кнопкой удаления
     // установите eventIdToDelete с id события в storage
     if (!event.target.closest('.event')) return;
 
     const eventElem = event.target.closest('.event');
+    const [title, time, description] = eventElem.children;
+    const startTime = time.textContent.split(' - ')[0];
+    const endTime = time.textContent.split(' - ')[1];
     const xPos = event.clientX;
     const yPos = event.clientY;
     const id = event.target.dataset;
-    openPopup(xPos, yPos, eventElem);
+    
+    popupTitle.value = title.textContent;
+    popupStartTime.value = startTime;
+    popupEndTime.value = endTime;
+    popupDescripion.value = description.textContent;
+   
+    openPopup(xPos, yPos);
     setItem('eventIdToDelete', id);
 }
 
@@ -38,7 +52,7 @@ const createEventElement = event => {
 
     const heightElem = (new Date(event.end).getTime() - new Date(event.start).getTime()) / 60000;
     const topPosition = new Date(event.start).getMinutes();
-    const formatter = new Intl.DateTimeFormat ('en', {
+    const formatter = new Intl.DateTimeFormat('en', {
         timeZone: 'UTC',
         hour: '2-digit',
         minute: '2-digit',
@@ -124,7 +138,23 @@ function onDeleteEvent() {
     closePopup();
     renderEvents();
 }
-
-deleteEventBtn.addEventListener('click', onDeleteEvent);
+const executePopupActions = () => {
+    if(event.target.classList.contains('fas fa-save')){
+        setItem('title', popupTitle.value);
+        setItem('start', popupStartTime.value);
+        setItem('end', popupEndTime.value);
+        setItem('description', popupDescripion.value);
+      }
+      else if(event.target.classList.contains('fa-sign-out-alt')) {
+        closePopup();
+      }
+      if(event.target.classList.contains('fa-trash-alt')) {
+        onDeleteEvent();
+      }
+    
+      console.log(popupTitle)
+      renderEvents();
+}
+// deleteEventBtn.addEventListener('click', onDeleteEvent);
 
 weekElem.addEventListener('click', handleEventClick);
