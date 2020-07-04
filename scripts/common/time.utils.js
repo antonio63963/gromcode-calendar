@@ -64,3 +64,31 @@ export const getDisplayedMonth = date => {
         ? `${monthsNames[startMonth]} - ${monthsNames[endMonth]} ${startYear}`
         : `${monthsNames[startMonth]} ${startYear} - ${monthsNames[endMonth]} ${endYear}`;
 };
+// FORMATING DATE
+const formatter = new Intl.DateTimeFormat('en', {
+
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false
+});
+export const getTime = date => formatter.format(date);
+
+//  translate date to '2020-07-01' format for input type= date
+export const formatingYear = (date) => {
+    const optionsForYear = {
+        day: 'numeric',
+        month: 'numeric',
+        year: 'numeric'
+    };
+    const yearInString = new Date(date).toLocaleString('ru', optionsForYear);
+    return yearInString.split('.').reverse().join('-');
+};
+//получить время кратное 15ти 12:24 => 12:30
+export const getMultipleFifteeen = (eventTime) => {
+   const timeArr = eventTime.split(':');
+   let minutes = timeArr[1] 
+  timeArr[1] = minutes % 15 ? Math.round(minutes / 15)*15 : minutes;
+//    console.log(timeArr.join(':'))
+   return timeArr.join(':');
+};
+

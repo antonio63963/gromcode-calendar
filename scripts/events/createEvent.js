@@ -11,6 +11,7 @@ import {
 import {
     closeModal
 } from '../common/modal.js';
+import { getMultipleFifteeen } from '../common/time.utils.js';
 
 const eventFormElem = document.querySelector('.event-form');
 const submitBtn = document.querySelector('.event-form__submit-btn');
@@ -22,6 +23,31 @@ function clearEventForm() {
     console.log(inputArr);
     inputArr.forEach(dom => dom.textContent = '');
     console.log(inputArr)
+}
+const eventValidator = (startTime, endTime) => {
+    const rangeTime = (new Date(endTime).getTime() - new Date(startTime).getTime()) / 3600000;
+    console.log(rangeTime);
+    if(getItem('events').length > 0) {
+        getItem('events').forEach(({start, end, title}) => {
+        
+            if((startTime >= start && startTime <= end) || (endTime >= start && startTime <= start)
+            || start >= startTime && start <= endTime) {
+                alert(`У вас уже есть событие ${title} в это время!`);
+                return false;
+        
+            } else{
+              return true;
+            }
+        });
+    } else if(rangeTime > 6) {
+        alert (`Событие не может длиться больше 6-ти часов!`);
+        return false;
+    } else if(new Date(startTime).getDate() !== new Date(endTime).getDate()) {
+        alert(`Событие должно начинаться и заканчиваться в один день!`);
+        return false;
+    } else {
+       return true;
+    }
 }
 
 function onCloseEventForm() {
@@ -43,15 +69,18 @@ function onCreateEvent(event) {
     // закрываем форму
     // и запускаем перерисовку событий с помощью renderEvents
     event.preventDefault();
+   
     const titleEvent = document.getElementsByName('title')[0].value;
     const dateEvent = document.getElementsByName('date')[0].value;
     const startTimeEvent = document.getElementsByName('startTime')[0].value;
     const endTimeEvent = document.getElementsByName('endTime')[0].value;
     const descriptionEvent = document.getElementsByName('description')[0].value;
-
-    const startTime = getDateTime(dateEvent, startTimeEvent);
-    const endTime = getDateTime(dateEvent, endTimeEvent);
-
+// кратность события 15-ти
+    const rotundStart = getMultipleFifteeen(startTimeEvent);
+    const rotundEnd = getMultipleFifteeen(endTimeEvent);
+    const startTime = getDateTime(dateEvent, rotundStart);
+    const endTime = getDateTime(dateEvent, rotundEnd);
+   
     const definisionId = `0.${new Date().getTime()}`;
 
     const eventToArr = {
@@ -61,10 +90,32 @@ function onCreateEvent(event) {
         start: startTime,
         end: endTime,
     };
- 
-    setItem('events', eventToArr);
-    onCloseEventForm();
-    renderEvents();
+
+// проверка пересечения событий
+    if(eventValidator(startTime, endTime)) {
+        setItem('events', eventToArr);
+        onCloseEventForm();
+        renderEvents();
+    }
+// if(getItem('events').length > 0) {
+//     getItem('events').forEach(({start, end, title}) => {
+    
+//         if((startTime >= start && startTime <= end) || (endTime >= start && startTime <= start)
+//         || start >= startTime && start <= endTime) {
+//             alert(`У вас уже есть событие ${title} в это время!`);
+//             return;
+          
+//         } else {
+//             setItem('events', eventToArr);
+//             onCloseEventForm();
+//             renderEvents();
+//         }
+//     });
+// } else {
+//     setItem('events', eventToArr);
+//     onCloseEventForm();
+//     renderEvents();
+// }
 }
 
 

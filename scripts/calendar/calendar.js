@@ -16,8 +16,9 @@ const generateDay = () => {
     // разметка состоит из 24 часовых временных слотов (.calendar__time-slot)
     let hoursColumn = [];
     for (let i = 0; i < 24; i++) {
+        const hour = i < 10 ? `0${i}` : i;
         hoursColumn.push(
-            `<div class="calendar__time-slot" data-time="${i}"></div>`
+            `<div class="calendar__time-slot" data-time="${hour}"></div>`
         );
     }
     return hoursColumn.join('');
@@ -37,7 +38,7 @@ export const renderWeek = () => {
     const weekDaysArr = generateWeekRange(monday);
    let weekDaysMesh = weekDaysArr.reduce((acc, date) => {
        acc.push(
-           `<div class="calendar__day" data-day="${new Date(date).getDate()}">
+           `<div class="calendar__day" data-day="${new Date(date).getDate()}" data-date="${new Date(date)}">
            ${generateDay()}
            </div>`
        );

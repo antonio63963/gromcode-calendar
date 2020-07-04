@@ -1,7 +1,11 @@
+import { formatingYear } from './time.utils.js';
+
 const modalElem = document.querySelector('.modal');
 const modalContentElem = document.querySelector('.modal__content');
 
+
 export const openModal = () => {
+    // dateEventElem.value = formatingYear(new Date());
     modalElem.classList.toggle('hidden');
    
 }

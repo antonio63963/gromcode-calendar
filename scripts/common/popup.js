@@ -1,4 +1,4 @@
-
+import { setItem } from './storage.js';
 
 const popupElem = document.querySelector('.popup');
 const popupContentElem = document.querySelector('.popup__content');
