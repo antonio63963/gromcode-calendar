@@ -26,7 +26,7 @@ function clearEventForm() {
 }
 const eventValidator = (startTime, endTime) => {
     const rangeTime = (new Date(endTime).getTime() - new Date(startTime).getTime()) / 3600000;
-    console.log(rangeTime);
+
     if(getItem('events').length > 0) {
         getItem('events').forEach(({start, end, title}) => {
         

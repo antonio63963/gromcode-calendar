@@ -3,6 +3,7 @@
 
 
 .event {
+  // height: 80%;
   background-color: $blue-color;
   min-width: 100px;
   border-radius: 7px;
@@ -15,15 +16,19 @@
   cursor: pointer;
   overflow: hidden;
   animation: revealEvent 0.5s ease-in-out 0s forwards;
+
+  
 }
 
 @keyframes revealEvent {
   from {
     height: 80%;
+   
   }
 
   to {
     height: 100%;
+   
   }
 }
 

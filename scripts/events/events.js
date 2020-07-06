@@ -9,7 +9,7 @@ import {
 } from '../common/popup.js';
 import { getDateTime, formatingYear, getTime } from '../common/time.utils.js';
 import { openModal } from '../common/modal.js';
-
+import { showTimeLine } from '../calendar/calendar.js';
 const weekElem = document.querySelector('.calendar__week');
 const deleteEventBtn = document.querySelector('.fa-trash-alt');
 const popupContentElem = document.querySelector('.popup__content');
@@ -64,10 +64,12 @@ const createEventElement = event => {
     const endTime = getTime(new Date(event.end));
     console.log(`start  ${endTime}`);
     const eventDom = document.createElement('div');
-    eventDom.classList.add('event');
-    eventDom.dataset.eventId = event.id;
     eventDom.style.height = `${heightElem}px`;
     eventDom.style.top = `${topPosition}px`;
+
+  
+    eventDom.classList.add('event');
+    eventDom.dataset.eventId = event.id;
 
 
     const eventTitle = document.createElement('div');
@@ -80,21 +82,7 @@ const createEventElement = event => {
     eventTime.textContent = `${startTime} - ${endTime}`;
     eventDom.append(eventTime);
 
-    const eventDate = document.createElement('div');
-    eventDate.classList.add('event__date');
-    eventDate.style.display = 'none';
-    eventDate.textContent = event.start;
-    // console.log(event.start)
-    eventDom.append(eventDate);
-
-    const eventDescription = document.createElement('div');
-    eventDescription.classList.add('event__description');
-    // eventDescription.classList.add('hidden');
-    eventDescription.style.display = 'none';
-    eventDescription.textContent = event.description;
-    eventDom.append(eventDescription);
-
-    // console.log('dom Event  ', eventDom);
+console.log(eventDom)
     return eventDom;
 };
 
@@ -117,6 +105,7 @@ export const renderEvents = () => {
     });
     // console.log('filteredEvents:  ', filteredEvents);
     const calendarDaysArr = document.querySelectorAll('.calendar__day');
+    
    
     removeEventsFromCalendar();
     filteredEvents.forEach(event => {
@@ -132,6 +121,7 @@ export const renderEvents = () => {
         }
 
     });
+    showTimeLine()
 };
 const validationForDelete = (event) => {
     const deleteTime = new Date().getTime();
@@ -181,8 +171,9 @@ const getEventFromField = (e) => {
 
     let hour = e.target.dataset.time;
     
-    const dateInWeek = new Date(e.target.closest('.calendar__day').dataset.date);
-    const date = formatingYear(dateInWeek)
+    // const dateInWeek = new Date(e.target.closest('.calendar__day').dataset.date);
+    // const date = formatingYear(dateInWeek)
+    const dateInWeek = e.target.closest('.calendar__day').dataset.date;
     let startTime = e.target.dataset.time;
     const endTime = +startTime < 10 ? `0${+startTime + 1}` : +startTime + 1;
 
@@ -190,7 +181,7 @@ const getEventFromField = (e) => {
     const dateEvent = document.getElementsByName('date')[0];
     const startTimeEvent = document.getElementsByName('startTime')[0];
     const endTimeEvent = document.getElementsByName('endTime')[0];
-    dateEvent.value = date;
+    dateEvent.value = dateInWeek;
     startTimeEvent.value = `${startTime}:00`;
     endTimeEvent.value = `${endTime}:00`;
     console.log(startTime.value)

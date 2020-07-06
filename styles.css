@@ -212,7 +212,7 @@
 .calendar__week {
   display: flex;
   justify-content: space-around;
-  flex: 1 1 auto;
+  flex: 1 0 auto;
 }
 
 .calendar__header {
@@ -236,14 +236,14 @@
 .calendar__day {
   display: flex;
   flex-direction: column;
-  flex: 1 1 auto;
+  flex: 1 0 auto;
 }
 
 .calendar__time-slot {
   display: flex;
   min-width: 100px;
-  min-height: 60px;
-  flex: 1 1 auto;
+  height: 60px;
+  flex: 1 0 auto;
   border: 2px solid lightgrey;
   border-width: 0 1px 1px 0px;
   position: relative;
@@ -267,12 +267,32 @@
   width: 45px;
   font-size: 14px;
   text-align: right;
-  flex: 1 1 auto;
+  flex: 1 0 auto;
 }
 .time-slot__time {
   position: relative;
   top: 50px;
   right: 10px;
+}
+
+.timeLine {
+  min-width: 100px;
+  height: 10px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  flex: 1 0 100px;
+}
+.timeLine__circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #cf3333;
+}
+.timeLine__line {
+  height: 2px;
+  background-color: #cf3333;
+  flex: 1 0 auto;
 }
 
 .button {
