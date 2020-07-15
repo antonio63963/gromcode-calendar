@@ -19,26 +19,28 @@ const closeEventFormBtn = document.querySelector('.create-event__close-btn');
 
 function clearEventForm() {
     // ф-ция должна очистить поля формы от значений
-    const inputArr = eventFormElem.querySelectorAll('input');
-    console.log(inputArr);
-    inputArr.forEach(dom => dom.textContent = '');
-    console.log(inputArr)
+    // const inputArr = eventFormElem.querySelectorAll('input');
+    // console.log(inputArr);
+    // inputArr.forEach(dom => dom.textContent = '');
+    // console.log(inputArr)
+    eventFormElem.reset();
 }
 const eventValidator = (startTime, endTime) => {
     const rangeTime = (new Date(endTime).getTime() - new Date(startTime).getTime()) / 3600000;
+    const eventsArr = getItem('events');
+  
 
-    if(getItem('events').length > 0) {
-        getItem('events').forEach(({start, end, title}) => {
-        
-            if((startTime >= start && startTime <= end) || (endTime >= start && startTime <= start)
-            || start >= startTime && start <= endTime) {
-                alert(`У вас уже есть событие ${title} в это время!`);
+
+    if(eventsArr.length > 0) {
+        for(let key of eventsArr) {
+            if((startTime > new Date(key.start) && startTime < new Date(key.end)) || (endTime > new Date(key.start) && startTime <= new Date(key.start))
+            || new Date(key.start) > startTime && new Date(key.start) < endTime) {
+                alert(`У вас уже есть событие ${key.title} в это время!`);
                 return false;
-        
             } else{
               return true;
             }
-        });
+        }
     } else if(rangeTime > 6) {
         alert (`Событие не может длиться больше 6-ти часов!`);
         return false;
@@ -49,12 +51,12 @@ const eventValidator = (startTime, endTime) => {
        return true;
     }
 }
-
 function onCloseEventForm() {
     // здесь нужно закрыть модальное окно и очистить форму
     const inputArr = eventFormElem.querySelectorAll('input');
     inputArr.forEach(dom => dom.textContent = '');
     closeModal();
+    // clearEventForm();
 }
 
 function onCreateEvent(event) {
@@ -90,32 +92,14 @@ function onCreateEvent(event) {
         start: startTime,
         end: endTime,
     };
-
+    // console.log(startTime, '  ', endTime)
 // проверка пересечения событий
     if(eventValidator(startTime, endTime)) {
         setItem('events', eventToArr);
         onCloseEventForm();
         renderEvents();
     }
-// if(getItem('events').length > 0) {
-//     getItem('events').forEach(({start, end, title}) => {
-    
-//         if((startTime >= start && startTime <= end) || (endTime >= start && startTime <= start)
-//         || start >= startTime && start <= endTime) {
-//             alert(`У вас уже есть событие ${title} в это время!`);
-//             return;
-          
-//         } else {
-//             setItem('events', eventToArr);
-//             onCloseEventForm();
-//             renderEvents();
-//         }
-//     });
-// } else {
-//     setItem('events', eventToArr);
-//     onCloseEventForm();
-//     renderEvents();
-// }
+
 }
 
 

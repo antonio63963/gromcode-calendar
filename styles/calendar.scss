@@ -2,9 +2,11 @@
 @import 'common.scss';
 .calendar {
     color: rgb(73, 73, 73);
-  height: 100%;
+    height: 100%;
+    display: flex;
+    
     &__time-scale {
-        
+        width: 65px;
     }
     &__week {
         display: flex;

@@ -1,4 +1,5 @@
 // стили навигации
+@import 'common.scss';
 
 .header {
     display: flex;
@@ -27,4 +28,21 @@
 .navigation__today-btn {
     width: 85px;
     border-width: 2px;
+}
+.header__btn-settings {
+    background: none;
+    border: none;
+    position: relative;
+    left: 50px;
+}
+.color-setting {
+    display: flex;
+    align-items: center;
+    margin: 50px;
+}
+.color-setting__eventsColor {
+    background: none;
+}
+.fa-sliders-h {
+    color: black;
 }

@@ -93,6 +93,93 @@
   display: none;
 }
 
+.button {
+  height: 40px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  outline: none;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.icon-button {
+  outline: none;
+  border: none;
+  cursor: pointer;
+  background: transparent;
+}
+
+.modal {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.modal__content {
+  background: #fff;
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-shadow: 0px 2px 5px 0px #999999;
+  position: relative;
+}
+
+.event-form {
+  margin-top: 20px;
+}
+.event-form__time {
+  margin: 20px 0;
+}
+
+.event-form__field {
+  border: none;
+}
+
+.event-form__submit-btn {
+  border: none;
+  border-radius: 5px;
+  background-color: #447be2;
+  color: #fff;
+  height: 30px;
+  width: 100px;
+}
+
+.create-event__close-btn {
+  background: none;
+  border: none;
+  transform: rotate(45deg);
+  position: absolute;
+  right: -5px;
+  top: 10px;
+}
+
+.create-event__close-btn:hover {
+  transform: scale(1.5);
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: #cccccc45;
+  z-index: 10;
+}
+
+.popup__content {
+  position: absolute;
+  background: #fff;
+  padding: 16px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.hidden {
+  display: none;
+}
+
 .header {
   display: flex;
   padding-top: 20px;
@@ -116,6 +203,27 @@
 .navigation__today-btn {
   width: 85px;
   border-width: 2px;
+}
+
+.header__btn-settings {
+  background: none;
+  border: none;
+  position: relative;
+  left: 50px;
+}
+
+.color-setting {
+  display: flex;
+  align-items: center;
+  margin: 50px;
+}
+
+.color-setting__eventsColor {
+  background: none;
+}
+
+.fa-sliders-h {
+  color: black;
 }
 
 .button {
@@ -383,7 +491,6 @@
 }
 
 .event {
-  background-color: #447be2;
   min-width: 100px;
   border-radius: 7px;
   color: wheat;
@@ -394,7 +501,6 @@
   z-index: 1;
   cursor: pointer;
   overflow: hidden;
-  animation: revealEvent 0.5s ease-in-out 0s forwards;
 }
 
 @keyframes revealEvent {
@@ -499,6 +605,10 @@ body {
 button {
   background: none;
   margin: 0 15px 0 0;
+}
+
+input {
+  border: none;
 }
 
 /*# sourceMappingURL=styles.css.map */

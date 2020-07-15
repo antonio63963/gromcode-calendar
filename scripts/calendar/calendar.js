@@ -17,18 +17,23 @@ export const showTimeLine = () => {
     const formatedCurrentDate = formatingYear(currentDate);
     const hourLine = currentDate.getHours();
     const minutes = currentDate.getMinutes();
-    const weekDayElem = [...document.querySelectorAll('.calendar__day')]
-        .find(day => day.dataset.date == formatedCurrentDate);
-    const hourOfWeekDay = [...weekDayElem.children].find(hour => hour.dataset.time == hourLine);
-    const timeLine = 
-    `<div class="timeLine" style="top: ${minutes - 5}px; left: -6px">
+    const isDayExist = [...document.querySelectorAll('.calendar__day')]
+        .some(day => day.dataset.date == formatedCurrentDate);
+    if (isDayExist) {
+        const weekDayElem = [...document.querySelectorAll('.calendar__day')]
+            .find(day => day.dataset.date == formatedCurrentDate);
+        const hourOfWeekDay = [...weekDayElem.children].find(hour => hour.dataset.time == hourLine);
+        const timeLine =
+            `<div class="timeLine" style="top: ${minutes - 5}px; left: -6px">
         <div class="timeLine__circle"></div>
         <div class="timeLine__line"></div>
         </div>`;
-    hourOfWeekDay.innerHTML = timeLine;
-   if(minutes == 59){weekDayElem.textContent = '';}
-    console.log(document.querySelector('.timeLine'));
-}
+        hourOfWeekDay.innerHTML = timeLine;
+        if (minutes == 59) {
+            weekDayElem.textContent = '';
+        }
+    }
+};
 const generateDay = () => {
     // функция должна сгенерировать и вернуть разметку дня в виде строки
     // разметка состоит из 24 часовых временных слотов (.calendar__time-slot)

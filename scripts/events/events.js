@@ -7,9 +7,20 @@ import {
     openPopup,
     closePopup
 } from '../common/popup.js';
-import { getDateTime, formatingYear, getTime } from '../common/time.utils.js';
-import { openModal } from '../common/modal.js';
-import { showTimeLine } from '../calendar/calendar.js';
+import {
+    getDateTime,
+    formatingYear,
+    getTime
+} from '../common/time.utils.js';
+import {
+    openModal
+} from '../common/modal.js';
+import {
+    showTimeLine
+} from '../calendar/calendar.js';
+// import { getColorEventFromLocal } from './eventSettings.js';
+
+
 const weekElem = document.querySelector('.calendar__week');
 const deleteEventBtn = document.querySelector('.fa-trash-alt');
 const popupContentElem = document.querySelector('.popup__content');
@@ -19,7 +30,12 @@ const popupStartTime = document.querySelector('.popup__start-time');
 const popupEndTime = document.querySelector('.popup__end-time');
 const popupDescripion = document.querySelector('.popup__description');
 let actualEvent;
+let eventsFromLocal;
 
+const getColorEventFromLocal = () =>
+    localStorage.getItem('eventColor') ?
+    JSON.parse(localStorage.getItem('eventColor')) :
+    '#447be2';
 
 
 function handleEventClick(event) {
@@ -29,11 +45,10 @@ function handleEventClick(event) {
     if (!event.target.closest('.event')) return;
     const xPos = event.clientX;
     const yPos = event.clientY;
-    const id = event.target.dataset.eventId;
+    const id = event.target.closest('.event').dataset.eventId;
+    eventsFromLocal = getItem('events');
+    actualEvent = eventsFromLocal.find(event => event.id == id);
   
-    actualEvent = getItem('events').find(event => event.id == id);
-    // const yearInString = new Date(actualEvent.start).toLocaleString('ru', optionsForYear);
-    // const yearFormated = yearInString.split('.').reverse().join('-');
     const yearFormated = formatingYear(actualEvent.start);
     popupTitle.value = actualEvent.title;
     popupDate.value = yearFormated;
@@ -66,8 +81,10 @@ const createEventElement = event => {
     const eventDom = document.createElement('div');
     eventDom.style.height = `${heightElem}px`;
     eventDom.style.top = `${topPosition}px`;
+    console.log(getColorEventFromLocal());
+    eventDom.style.backgroundColor = getColorEventFromLocal();
 
-  
+
     eventDom.classList.add('event');
     eventDom.dataset.eventId = event.id;
 
@@ -82,7 +99,7 @@ const createEventElement = event => {
     eventTime.textContent = `${startTime} - ${endTime}`;
     eventDom.append(eventTime);
 
-console.log(eventDom)
+  
     return eventDom;
 };
 
@@ -105,8 +122,8 @@ export const renderEvents = () => {
     });
     // console.log('filteredEvents:  ', filteredEvents);
     const calendarDaysArr = document.querySelectorAll('.calendar__day');
-    
-   
+
+
     removeEventsFromCalendar();
     filteredEvents.forEach(event => {
         const eventDate = new Date(event.start).getDate();
@@ -121,17 +138,22 @@ export const renderEvents = () => {
         }
 
     });
+    // const eventDomElements = [...document.querySelectorAll('.event')];
+    // localStorage.setItem('eventDomElements', JSON.stringify(eventDomElements))
     showTimeLine()
 };
 const validationForDelete = (event) => {
     const deleteTime = new Date().getTime();
     const startEvent = new Date(event.start).getTime();
     const difference = (startEvent - deleteTime) / 60000;
-    if(difference > 15) {
+    if (difference > 15) {
         alert(`Вы не можете удалить событие раньше чем за 15мин до его начала!`)
         return false;
-    } else { return true;}
+    } else {
+        return true;
+    }
 }
+
 function onDeleteEvent() {
     // достаем из storage массив событий и eventIdToDelete
     // удаляем из массива нужное событие и записываем в storage новый массив
@@ -139,9 +161,11 @@ function onDeleteEvent() {
     // перерисовать события на странице в соответствии с новым списком событий в storage (renderEvents)
     const eventIdToDelete = getItem('eventIdToDelete');
     let events = getItem('events');
-    const actualEvent = events.find(event => event.id == eventIdToDelete);
-    if(validationForDelete(actualEvent)) {
-        let clearedEvents = events.filter(event => !event.id == eventIdToDelete);
+ console.log(eventIdToDelete)
+    const deletedEvent = events.find(event => event.id == eventIdToDelete);
+    if (validationForDelete(deletedEvent)) {
+        let clearedEvents = events.filter(event => event.id !== eventIdToDelete);
+        // console.log(clearedEvents)
         setItem('events', clearedEvents);
         closePopup();
         renderEvents();
@@ -150,11 +174,12 @@ function onDeleteEvent() {
 const executePopupActions = (event) => {
 
     if (event.target.classList.contains('fa-save')) {
- 
+      
         actualEvent.title = popupTitle.value;
         actualEvent.start = getDateTime(popupDate.value, popupStartTime.value);
         actualEvent.end = getDateTime(popupDate.value, popupEndTime.value);
         actualEvent.description = popupDescripion.value;
+        setItem('events', eventsFromLocal);
         console.log(getItem('events'))
         closePopup()
         renderEvents();
@@ -167,10 +192,10 @@ const executePopupActions = (event) => {
 }
 
 const getEventFromField = (e) => {
-    if(!e.target.classList.contains('calendar__time-slot')) return;
+    if (!e.target.classList.contains('calendar__time-slot')) return;
 
     let hour = e.target.dataset.time;
-    
+
     // const dateInWeek = new Date(e.target.closest('.calendar__day').dataset.date);
     // const date = formatingYear(dateInWeek)
     const dateInWeek = e.target.closest('.calendar__day').dataset.date;
@@ -184,9 +209,13 @@ const getEventFromField = (e) => {
     dateEvent.value = dateInWeek;
     startTimeEvent.value = `${startTime}:00`;
     endTimeEvent.value = `${endTime}:00`;
-    console.log(startTime.value)
+ 
 }
 
 weekElem.addEventListener('click', handleEventClick);
 weekElem.addEventListener('click', getEventFromField);
 popupContentElem.addEventListener('click', executePopupActions)
+window.addEventListener('storage', (e) => {
+    console.log(e);
+    renderEvents();
+});
